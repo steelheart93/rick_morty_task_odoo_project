@@ -1,0 +1,17 @@
+{% extends "base.html" %}
+{% block content %}
+<h2>Editar Tarea</h2>
+<form method="POST">
+    Título: <input type="text" name="title" value="{{ task.title }}" required><br>
+    Descripción: <textarea name="description">{{ task.description }}</textarea><br>
+    Fecha vencimiento: <input type="date" name="due_date" value="{{ task.due_date }}" required><br>
+    Estado:
+    <select name="status">
+        <option {% if task.status == "Pendiente" %}selected{% endif %}>Pendiente</option>
+        <option {% if task.status == "En progreso" %}selected{% endif %}>En progreso</option>
+        <option {% if task.status == "Completada" %}selected{% endif %}>Completada</option>
+    </select><br>
+    <button type="submit">Actualizar</button>
+</form>
+<a href="{{ url_for('tasks.task_list') }}">Volver</a>
+{% endblock %}

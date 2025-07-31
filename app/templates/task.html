@@ -1,0 +1,26 @@
+{% extends "base.html" %}
+{% block content %}
+<h2>Mis Tareas</h2>
+<a href="{{ url_for('tasks.create_task') }}">+ Nueva Tarea</a> |
+<a href="{{ url_for('auth.logout') }}">Cerrar sesión</a>
+<ul>
+    {% for task in tasks %}
+        <li>
+            <strong>{{ task.title }}</strong> ({{ task.status }}) - vence: {{ task.due_date }}
+            <br>{{ task.description }}
+            {% if task.character_name %}
+                <br>Personaje: {{ task.character_name }} <img src="{{ task.character_image }}" width="50">
+            {% endif %}
+            <br>
+            <a href="{{ url_for('tasks.edit_task', task_id=task.id) }}">Editar</a> |
+            <a href="{{ url_for('tasks.delete_task', task_id=task.id) }}">Eliminar</a>
+
+            <br>
+            <a href="{{ url_for('characters.character_list', task=task.id) }}">Asociar personaje</a>
+            
+            <br>
+            <a href="{{ url_for('odoo.send_task_to_odoo', task_id=task.id) }}">Enviar a Odoo</a>
+        </li>
+    {% endfor %}
+</ul>
+{% endblock %}

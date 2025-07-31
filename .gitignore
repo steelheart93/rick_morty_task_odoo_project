@@ -1,1 +1,10 @@
+# Entorno virtual
 venv/
+
+# Archivos de caché y base local
+__pycache__/
+*.pyc
+*.db
+
+# Entorno y seguridad
+.env

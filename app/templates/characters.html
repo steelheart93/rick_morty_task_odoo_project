@@ -1,0 +1,27 @@
+{% extends "base.html" %}
+{% block content %}
+<h2>Personajes Rick & Morty</h2>
+
+<div>
+    {% for char in characters %}
+        <div style="margin:10px; display:inline-block; text-align:center;">
+            <img src="{{ char.image }}" width="100"><br>
+            {{ char.name }}<br>
+            {{ char.species }} / {{ char.status }}<br>
+            <a href="{{ url_for('characters.assign_character', character_id=char.id, task_id=request.args.get('task')) }}">Asignar</a>
+        </div>
+    {% endfor %}
+</div>
+
+<div style="margin-top:20px;">
+    {% if page > 1 %}
+        <a href="{{ url_for('characters.character_list', page=page-1, task=request.args.get('task')) }}">Anterior</a>
+    {% endif %}
+    Página {{ page }} de {{ pages }}
+    {% if page < pages %}
+        <a href="{{ url_for('characters.character_list', page=page+1, task=request.args.get('task')) }}">Siguiente</a>
+    {% endif %}
+</div>
+
+<a href="{{ url_for('tasks.task_list') }}">Volver a tareas</a>
+{% endblock %}

@@ -1,0 +1,17 @@
+{% extends "base.html" %}
+{% block content %}
+<h2>Crear Tarea</h2>
+<form method="POST">
+    Título: <input type="text" name="title" required><br>
+    Descripción: <textarea name="description"></textarea><br>
+    Fecha vencimiento: <input type="date" name="due_date" required><br>
+    Estado:
+    <select name="status">
+        <option>Pendiente</option>
+        <option>En progreso</option>
+        <option>Completada</option>
+    </select><br>
+    <button type="submit">Guardar</button>
+</form>
+<a href="{{ url_for('tasks.task_list') }}">Volver</a>
+{% endblock %}

@@ -10,32 +10,30 @@ odoo_bp = Blueprint('odoo', __name__, url_prefix='/odoo')
 def send_task_to_odoo(task_id):
     task = Task.query.get_or_404(task_id)
 
-    # Configuración de Odoo
+    # Configuración de conexión
     url = 'http://localhost:8069'
-    db = 'odoo_db'
-    username = 'admin'
-    password = 'admin'
+    db = 'odoo'  # Nombre de tu base Odoo
+    username = 'admin'  # Usuario Odoo
+    password = 'odoo'  # Contraseña Odoo
 
     try:
-        # Autenticación
         common = xmlrpc.client.ServerProxy(f'{url}/xmlrpc/2/common')
         uid = common.authenticate(db, username, password, {})
 
-        # Acceso a modelos
         models = xmlrpc.client.ServerProxy(f'{url}/xmlrpc/2/object')
 
-        result = models.execute_kw(db, uid, password, 'rick.task', 'create', [{
+        models.execute_kw(db, uid, password, 'rick.task', 'create', [{
             'title': task.title,
             'description': task.description,
             'due_date': str(task.due_date),
             'status': task.status.lower().replace(" ", "_"),
             'character_name': task.character_name,
-            'character_image': task.character_image,
+            'character_image': task.character_image
         }])
 
-        flash('Tarea enviada a Odoo correctamente.')
+        flash("Tarea enviada a Odoo correctamente.")
     except Exception as e:
-        print(e)
-        flash('Error al enviar tarea a Odoo.')
+        print("Error:", e)
+        flash("Error al conectar con Odoo.")
 
     return redirect(url_for('tasks.task_list'))

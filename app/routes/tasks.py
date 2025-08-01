@@ -3,6 +3,7 @@ from flask_login import login_required, current_user
 
 from .. import db
 from ..models import Task
+from datetime import datetime
 
 tasks_bp = Blueprint('tasks', __name__, url_prefix='/tasks')
 
@@ -18,8 +19,9 @@ def create_task():
     if request.method == 'POST':
         title = request.form['title']
         description = request.form['description']
-        due_date = request.form['due_date']
+        due_date = datetime.strptime(request.form['due_date'], "%Y-%m-%d").date()
         status = request.form['status']
+
         new_task = Task(
             title=title,
             description=description,
@@ -30,7 +32,8 @@ def create_task():
         db.session.add(new_task)
         db.session.commit()
         return redirect(url_for('tasks.task_list'))
-    return render_template('create_task.html')
+
+    return render_template('task_form.html', task=None)
 
 @tasks_bp.route('/edit/<int:task_id>', methods=['GET', 'POST'])
 @login_required
@@ -38,14 +41,16 @@ def edit_task(task_id):
     task = Task.query.get_or_404(task_id)
     if task.user_id != current_user.id:
         return "No autorizado", 403
+
     if request.method == 'POST':
         task.title = request.form['title']
         task.description = request.form['description']
-        task.due_date = request.form['due_date']
+        task.due_date = datetime.strptime(request.form['due_date'], "%Y-%m-%d").date()
         task.status = request.form['status']
         db.session.commit()
         return redirect(url_for('tasks.task_list'))
-    return render_template('edit_task.html', task=task)
+
+    return render_template('task_form.html', task=task)
 
 @tasks_bp.route('/delete/<int:task_id>')
 @login_required

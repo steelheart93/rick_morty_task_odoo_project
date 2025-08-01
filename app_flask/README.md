@@ -11,7 +11,7 @@ App desarrollada en Flask para crear tareas con personajes de Rick and Morty, in
 ## ⚙️ Instalación
 
 ```bash
-git clone https://github.com/usuario/rick_morty_task_project.git
+git clone https://github.com/steelheart93/rick_morty_task_odoo_project.git
 cd rick_morty_task_project/app_flask
 
 python -m venv venv

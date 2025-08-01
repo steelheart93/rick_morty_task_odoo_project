@@ -1,1 +1,3 @@
-from . import rick_task
+# -*- coding: utf-8 -*-
+
+from . import models

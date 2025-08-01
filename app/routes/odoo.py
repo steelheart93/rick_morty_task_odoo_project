@@ -14,7 +14,7 @@ def send_task_to_odoo(task_id):
     url = 'http://localhost:8069'
     db = 'odoo'  # Nombre de tu base Odoo
     username = 'admin'  # Usuario Odoo
-    password = 'odoo'  # Contraseña Odoo
+    password = 'admin'  # Contraseña Odoo
 
     try:
         common = xmlrpc.client.ServerProxy(f'{url}/xmlrpc/2/common')

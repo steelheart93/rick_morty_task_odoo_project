@@ -1,0 +1,52 @@
+<odoo>
+  <data>
+
+    <!-- Vista lista (antes tree) -->
+    <record id="view_rick_task_list" model="ir.ui.view">
+      <field name="name">rick.task.list</field>
+      <field name="model">rick.task</field>
+      <field name="arch" type="xml">
+        <list>
+          <field name="title" />
+          <field name="status" />
+          <field name="due_date" />
+          <field name="character_name" />
+          <field name="character_image" />
+        </list>
+      </field>
+    </record>
+
+    <!-- Vista formulario -->
+    <record id="view_rick_task_form" model="ir.ui.view">
+      <field name="name">rick.task.form</field>
+      <field name="model">rick.task</field>
+      <field name="arch" type="xml">
+        <form>
+          <group>
+            <field name="title" />
+            <field name="description" />
+            <field name="due_date" />
+            <field name="status" />
+            <field name="character_name" />
+            <field name="character_image" />
+          </group>
+        </form>
+      </field>
+    </record>
+
+    <!-- Acción ventana -->
+    <record id="action_rick_task" model="ir.actions.act_window">
+      <field name="name">Rick Tasks</field>
+      <field name="res_model">rick.task</field>
+      <field name="view_mode">list,form</field>
+    </record>
+
+    <!-- Menú raíz -->
+    <menuitem id="menu_rick_tasks_root" name="Rick &amp; Morty" />
+
+    <!-- Menú de tareas -->
+    <menuitem id="menu_rick_tasks" name="Tareas" parent="menu_rick_tasks_root"
+      action="action_rick_task" />
+
+  </data>
+</odoo>

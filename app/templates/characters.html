@@ -1,27 +1,38 @@
 {% extends "base.html" %}
 {% block content %}
-<h2>Personajes Rick & Morty</h2>
-
-<div>
+<h2>Personajes de Rick & Morty</h2>
+<div class="row">
     {% for char in characters %}
-        <div style="margin:10px; display:inline-block; text-align:center;">
-            <img src="{{ char.image }}" width="100"><br>
-            {{ char.name }}<br>
-            {{ char.species }} / {{ char.status }}<br>
-            <a href="{{ url_for('characters.assign_character', character_id=char.id, task_id=request.args.get('task')) }}">Asignar</a>
+    <div class="col-md-3 mb-4 text-center">
+        <div class="card h-100">
+            <img src="{{ char.image }}" class="card-img-top" alt="{{ char.name }}">
+            <div class="card-body">
+                <h5 class="card-title">{{ char.name }}</h5>
+                <p class="card-text">{{ char.species }} - {{ char.status }}</p>
+                <a href="{{ url_for('characters.assign_character', character_id=char.id, task_id=request.args.get('task')) }}"
+                    class="btn btn-sm btn-primary">Asignar</a>
+            </div>
         </div>
+    </div>
     {% endfor %}
 </div>
 
-<div style="margin-top:20px;">
-    {% if page > 1 %}
-        <a href="{{ url_for('characters.character_list', page=page-1, task=request.args.get('task')) }}">Anterior</a>
-    {% endif %}
-    Página {{ page }} de {{ pages }}
-    {% if page < pages %}
-        <a href="{{ url_for('characters.character_list', page=page+1, task=request.args.get('task')) }}">Siguiente</a>
-    {% endif %}
-</div>
+<nav class="mt-4">
+    <ul class="pagination justify-content-center">
+        {% if page > 1 %}
+        <li class="page-item">
+            <a class="page-link"
+                href="{{ url_for('characters.character_list', page=page-1, task=request.args.get('task')) }}">Anterior</a>
+        </li>
+        {% endif %}
+        <li class="page-item disabled"><span class="page-link">Página {{ page }} de {{ pages }}</span></li>
+        {% if page < pages %} <li class="page-item">
+            <a class="page-link"
+                href="{{ url_for('characters.character_list', page=page+1, task=request.args.get('task')) }}">Siguiente</a>
+            </li>
+            {% endif %}
+    </ul>
+</nav>
 
-<a href="{{ url_for('tasks.task_list') }}">Volver a tareas</a>
+<a href="{{ url_for('tasks.task_list') }}" class="btn btn-secondary">Volver a tareas</a>
 {% endblock %}

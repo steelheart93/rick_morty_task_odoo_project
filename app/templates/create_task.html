@@ -1,17 +1,28 @@
 {% extends "base.html" %}
 {% block content %}
-<h2>Crear Tarea</h2>
-<form method="POST">
-    Título: <input type="text" name="title" required><br>
-    Descripción: <textarea name="description"></textarea><br>
-    Fecha vencimiento: <input type="date" name="due_date" required><br>
-    Estado:
-    <select name="status">
-        <option>Pendiente</option>
-        <option>En progreso</option>
-        <option>Completada</option>
-    </select><br>
-    <button type="submit">Guardar</button>
+<h2>{% if task %}Editar{% else %}Crear{% endif %} Tarea</h2>
+<form method="POST" class="w-50 mx-auto">
+    <div class="mb-3">
+        <label>Título:</label>
+        <input type="text" name="title" class="form-control" value="{{ task.title if task else '' }}" required>
+    </div>
+    <div class="mb-3">
+        <label>Descripción:</label>
+        <textarea name="description" class="form-control">{{ task.description if task else '' }}</textarea>
+    </div>
+    <div class="mb-3">
+        <label>Fecha de vencimiento:</label>
+        <input type="date" name="due_date" class="form-control" value="{{ task.due_date if task else '' }}" required>
+    </div>
+    <div class="mb-3">
+        <label>Estado:</label>
+        <select name="status" class="form-select">
+            {% for option in ["Pendiente", "En progreso", "Completada"] %}
+                <option value="{{ option }}" {% if task and task.status == option %}selected{% endif %}>{{ option }}</option>
+            {% endfor %}
+        </select>
+    </div>
+    <button type="submit" class="btn btn-success">Guardar</button>
+    <a href="{{ url_for('tasks.task_list') }}" class="btn btn-secondary">Cancelar</a>
 </form>
-<a href="{{ url_for('tasks.task_list') }}">Volver</a>
 {% endblock %}

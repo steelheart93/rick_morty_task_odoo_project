@@ -1,10 +1,16 @@
 {% extends "base.html" %}
 {% block content %}
 <h2>Iniciar Sesión</h2>
-<form method="POST">
-    Email: <input type="email" name="email" required><br>
-    Contraseña: <input type="password" name="password" required><br>
-    <button type="submit">Entrar</button>
+<form method="POST" class="w-50 mx-auto">
+    <div class="mb-3">
+        <label>Email:</label>
+        <input type="email" name="email" class="form-control" required>
+    </div>
+    <div class="mb-3">
+        <label>Contraseña:</label>
+        <input type="password" name="password" class="form-control" required>
+    </div>
+    <button type="submit" class="btn btn-success">Entrar</button>
+    <a href="{{ url_for('auth.register') }}" class="btn btn-link">¿No tienes cuenta?</a>
 </form>
-<p>¿No tienes cuenta? <a href="{{ url_for('auth.register') }}">Regístrate</a></p>
 {% endblock %}

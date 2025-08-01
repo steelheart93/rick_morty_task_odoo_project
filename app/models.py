@@ -15,6 +15,7 @@ class Task(db.Model):
     due_date = db.Column(db.Date, nullable=False)
     status = db.Column(db.String(50), default="Pendiente")
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
-    character_id = db.Column(db.Integer)  # ID de Rick and Morty API
+    character_id = db.Column(db.Integer)
     character_name = db.Column(db.String(100))
     character_image = db.Column(db.String(300))
+
